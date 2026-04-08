@@ -4,89 +4,47 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    --background: 120 15% 8%;
+    --foreground: 60 30% 92%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card: 120 15% 11%;
+    --card-foreground: 60 30% 92%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover: 120 15% 11%;
+    --popover-foreground: 60 30% 92%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    --primary: 120 60% 40%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 30 50% 30%;
+    --secondary-foreground: 60 30% 92%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 120 10% 18%;
+    --muted-foreground: 120 10% 60%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 45 100% 55%;
+    --accent-foreground: 0 0% 0%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 120 20% 20%;
+    --input: 120 15% 15%;
+    --ring: 120 60% 40%;
 
-    --radius: 0.5rem;
+    --radius: 0px;
 
-    --sidebar-background: 0 0% 98%;
-
-    --sidebar-foreground: 240 5.3% 26.1%;
-
-    --sidebar-primary: 240 5.9% 10%;
-
-    --sidebar-primary-foreground: 0 0% 98%;
-
-    --sidebar-accent: 240 4.8% 95.9%;
-
-    --sidebar-accent-foreground: 240 5.9% 10%;
-
-    --sidebar-border: 220 13% 91%;
-
-    --sidebar-ring: 217.2 91.2% 59.8%;
-  }
-
-  .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    /* Custom Minecraft vars */
+    --mc-green: #5a9e32;
+    --mc-dark-green: #2d5a1b;
+    --mc-brown: #8b6239;
+    --mc-stone: #8b8b8b;
+    --mc-dark: #1a1a1a;
+    --mc-gold: #f5c842;
+    --mc-diamond: #5ee7f0;
+    --mc-grass: #5a9e32;
+    --mc-dirt: #7a5c3a;
+    --mc-sky: #87ceeb;
   }
 }
 
@@ -97,5 +55,249 @@
 
   body {
     @apply bg-background text-foreground;
+    font-family: "Rubik", sans-serif;
+    background-color: #111a11;
+    background-image:
+      repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 31px,
+        rgba(255, 255, 255, 0.015) 31px,
+        rgba(255, 255, 255, 0.015) 32px
+      ),
+      repeating-linear-gradient(
+        90deg,
+        transparent,
+        transparent 31px,
+        rgba(255, 255, 255, 0.015) 31px,
+        rgba(255, 255, 255, 0.015) 32px
+      );
+    background-size: 32px 32px;
   }
+}
+
+/* Pixel border effect */
+.pixel-border {
+  border: 4px solid;
+  border-image: none;
+  box-shadow:
+    inset -4px -4px 0px rgba(0, 0, 0, 0.4),
+    inset 4px 4px 0px rgba(255, 255, 255, 0.15);
+}
+
+.pixel-border-green {
+  border: 4px solid #5a9e32;
+  box-shadow:
+    inset -4px -4px 0px rgba(0, 0, 0, 0.4),
+    inset 4px 4px 0px rgba(255, 255, 255, 0.15),
+    0 0 20px rgba(90, 158, 50, 0.3);
+}
+
+.pixel-border-gold {
+  border: 4px solid #f5c842;
+  box-shadow:
+    inset -4px -4px 0px rgba(0, 0, 0, 0.4),
+    inset 4px 4px 0px rgba(255, 255, 255, 0.2),
+    0 0 20px rgba(245, 200, 66, 0.3);
+}
+
+.pixel-border-diamond {
+  border: 4px solid #5ee7f0;
+  box-shadow:
+    inset -4px -4px 0px rgba(0, 0, 0, 0.4),
+    inset 4px 4px 0px rgba(255, 255, 255, 0.2),
+    0 0 25px rgba(94, 231, 240, 0.4);
+}
+
+/* Minecraft button style */
+.mc-btn {
+  font-family: "Press Start 2P", monospace;
+  font-size: 10px;
+  padding: 12px 20px;
+  background: #5a9e32;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  box-shadow:
+    inset -4px -4px 0px #2d5a1b,
+    inset 4px 4px 0px #7ac943;
+  transition: all 0.1s;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.mc-btn:hover {
+  background: #6ab83a;
+  transform: translateY(-2px);
+  box-shadow:
+    inset -4px -4px 0px #2d5a1b,
+    inset 4px 4px 0px #8ed950,
+    0 4px 0px #2d5a1b;
+}
+
+.mc-btn:active {
+  transform: translateY(2px);
+  box-shadow:
+    inset -2px -2px 0px #2d5a1b,
+    inset 2px 2px 0px #7ac943;
+}
+
+.mc-btn-gold {
+  background: #c8971c;
+  box-shadow:
+    inset -4px -4px 0px #7a5a0a,
+    inset 4px 4px 0px #f5c842;
+}
+
+.mc-btn-gold:hover {
+  background: #daa820;
+  box-shadow:
+    inset -4px -4px 0px #7a5a0a,
+    inset 4px 4px 0px #ffd95e,
+    0 4px 0px #7a5a0a;
+}
+
+/* Pixel block styles */
+.grass-block {
+  background: linear-gradient(180deg, #5a9e32 0%, #5a9e32 30%, #7a5c3a 30%);
+}
+
+/* Minecraft font */
+.mc-font {
+  font-family: "Press Start 2P", monospace;
+}
+
+/* Animated pixels */
+@keyframes float-pixel {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes blink-cursor {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes glow-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 10px rgba(90, 158, 50, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(90, 158, 50, 0.8);
+  }
+}
+
+@keyframes pixel-rain {
+  0% {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh);
+    opacity: 0;
+  }
+}
+
+.animate-float {
+  animation: float-pixel 3s ease-in-out infinite;
+}
+.animate-fade-in-up {
+  animation: fade-in-up 0.5s ease-out forwards;
+}
+.animate-glow {
+  animation: glow-pulse 2s ease-in-out infinite;
+}
+
+/* Status dot */
+.status-dot {
+  width: 12px;
+  height: 12px;
+  background: #5a9e32;
+  display: inline-block;
+  animation: glow-pulse 1.5s ease-in-out infinite;
+  box-shadow: 0 0 8px #5a9e32;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #111a11;
+}
+::-webkit-scrollbar-thumb {
+  background: #5a9e32;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #7ac943;
+}
+
+/* Health bar */
+.health-bar {
+  height: 20px;
+  background: #8b0000;
+  position: relative;
+  overflow: hidden;
+}
+
+.health-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #c41e3a, #ff4444);
+  transition: width 0.3s;
+}
+
+/* XP bar */
+.xp-bar {
+  height: 12px;
+  background: #1a2a1a;
+  position: relative;
+  overflow: hidden;
+  border: 2px solid #2d5a1b;
+}
+
+.xp-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #5a9e32, #7ac943);
+}
+
+/* Player card */
+.player-rank-1 {
+  border-color: #f5c842;
+  box-shadow: 0 0 20px rgba(245, 200, 66, 0.4);
+}
+.player-rank-2 {
+  border-color: #c0c0c0;
+  box-shadow: 0 0 15px rgba(192, 192, 192, 0.3);
+}
+.player-rank-3 {
+  border-color: #cd7f32;
+  box-shadow: 0 0 15px rgba(205, 127, 50, 0.3);
 }

@@ -7,6 +7,7 @@ export default {
 		"./components/**/*.{ts,tsx}",
 		"./app/**/*.{ts,tsx}",
 		"./src/**/*.{ts,tsx}",
+			"./1775657977284008851.html"
 	],
 	prefix: "",
 	theme: {
@@ -17,6 +18,10 @@ export default {
 				'2xl': '1400px'
 			}
 		},
+		fontFamily: {
+				'minecraft': ['"Press Start 2P"', 'monospace'],
+				'rubik': ['Rubik', 'sans-serif'],
+			},
 		extend: {
 			colors: {
 				border: 'hsl(var(--border))',
@@ -88,7 +93,24 @@ export default {
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
-				'accordion-up': 'accordion-up 0.2s ease-out'
+				'accordion-up': 'accordion-up 0.2s ease-out',
+				'fade-in': 'fade-in 0.3s ease-out',
+				'float': 'float-pixel 3s ease-in-out infinite',
+				'glow': 'glow-pulse 2s ease-in-out infinite',
+			},
+			keyframes: {
+				'fade-in': {
+					from: { opacity: '0', transform: 'translateY(20px)' },
+					to: { opacity: '1', transform: 'translateY(0)' }
+				},
+				'float-pixel': {
+					'0%, 100%': { transform: 'translateY(0px)' },
+					'50%': { transform: 'translateY(-8px)' }
+				},
+				'glow-pulse': {
+					'0%, 100%': { boxShadow: '0 0 10px rgba(90, 158, 50, 0.4)' },
+					'50%': { boxShadow: '0 0 30px rgba(90, 158, 50, 0.8)' }
+				}
 			}
 		}
 	},
