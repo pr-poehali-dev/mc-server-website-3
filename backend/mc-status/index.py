@@ -40,6 +40,7 @@ def handler(event: dict, context) -> dict:
                 'players_max': 0,
                 'version': '',
                 'motd': '',
+                'player_list': [],
                 'error': str(e)
             })
         }
@@ -87,12 +88,17 @@ def ping_minecraft(host: str, port: int, timeout: int) -> dict:
     version = data_json.get('version', {}).get('name', '')
     motd = _strip_motd(data_json.get('description', ''))
 
+    # Список ников онлайн-игроков (если сервер отдаёт sample)
+    sample = players.get('sample', [])
+    player_list = [p.get('name', '') for p in sample if p.get('name')]
+
     return {
         'online': True,
         'players_online': players.get('online', 0),
         'players_max': players.get('max', 0),
         'version': version,
         'motd': motd,
+        'player_list': player_list,
     }
 
 

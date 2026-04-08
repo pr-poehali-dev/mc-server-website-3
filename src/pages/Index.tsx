@@ -20,16 +20,7 @@ const RULES = [
   { icon: "⚔️", title: "PvP зоны", desc: "PvP разрешён только в специально отведённых зонах." },
 ];
 
-const PLAYERS = [
-  { rank: 1, name: "DiamondKing", kills: 2841, playtime: "312ч", level: 99, skin: "💎" },
-  { rank: 2, name: "SteveMaster", kills: 2203, playtime: "287ч", level: 87, skin: "⚔️" },
-  { rank: 3, name: "CreeperSlayer", kills: 1987, playtime: "241ч", level: 76, skin: "🏹" },
-  { rank: 4, name: "BuilderPro", kills: 1654, playtime: "198ч", level: 65, skin: "🏗️" },
-  { rank: 5, name: "NightWalker", kills: 1432, playtime: "176ч", level: 58, skin: "🌙" },
-  { rank: 6, name: "GoldMiner99", kills: 1287, playtime: "154ч", level: 51, skin: "⛏️" },
-  { rank: 7, name: "EnderDragon", kills: 1102, playtime: "132ч", level: 44, skin: "🐉" },
-  { rank: 8, name: "RedstoneWiz", kills: 987, playtime: "119ч", level: 38, skin: "🔴" },
-];
+
 
 const NEWS = [
   {
@@ -72,10 +63,10 @@ export default function Index() {
   const [activeSection, setActiveSection] = useState("home");
   const [onlinePlayers, setOnlinePlayers] = useState(0);
   const [maxPlayers, setMaxPlayers] = useState(20);
-  const [tps] = useState(20.0);
   const [serverOnline, setServerOnline] = useState(false);
   const [serverVersion, setServerVersion] = useState("");
   const [serverMotd, setServerMotd] = useState("");
+  const [playerList, setPlayerList] = useState<string[]>([]);
   const [statusLoading, setStatusLoading] = useState(true);
   const [mobileMenu, setMobileMenu] = useState(false);
 
@@ -88,6 +79,7 @@ export default function Index() {
       setMaxPlayers(data.players_max ?? 20);
       setServerVersion(data.version ?? "");
       setServerMotd(data.motd ?? "");
+      setPlayerList(data.player_list ?? []);
     } catch {
       setServerOnline(false);
     } finally {
@@ -124,12 +116,7 @@ export default function Index() {
     setMobileMenu(false);
   };
 
-  const rankStyle = (rank: number) => {
-    if (rank === 1) return "player-rank-1 pixel-border border-[#f5c842]";
-    if (rank === 2) return "player-rank-2 pixel-border border-[#c0c0c0]";
-    if (rank === 3) return "player-rank-3 pixel-border border-[#cd7f32]";
-    return "pixel-border border-[#2d5a1b]";
-  };
+
 
   return (
     <div className="min-h-screen bg-[#111a11] text-[#e8f0e0]" style={{ fontFamily: "Rubik, sans-serif" }}>
@@ -379,66 +366,69 @@ export default function Index() {
         </div>
       </section>
 
-      {/* ===== RATING ===== */}
+      {/* ===== ONLINE PLAYERS ===== */}
       <section id="rating" className="py-20 px-4 bg-[#0d150d]">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12">
             <h2
-              className="mc-font text-lg md:text-2xl text-[#f5c842] mb-2"
-              style={{ textShadow: "3px 3px 0px #7a5a0a" }}
+              className="mc-font text-lg md:text-2xl text-[#5a9e32] mb-2"
+              style={{ textShadow: "3px 3px 0px #1a3a0a" }}
             >
-              🏆 РЕЙТИНГ ИГРОКОВ
+              👥 ИГРОКИ ОНЛАЙН
             </h2>
-            <p className="text-[#9ab890]">Лучшие воины CraftWorld</p>
+            <p className="text-[#9ab890]">Кто сейчас на сервере · обновляется каждые 30 сек</p>
           </div>
 
-          <div className="space-y-3">
-            {PLAYERS.map((player, i) => (
-              <div
-                key={player.rank}
-                className={`${rankStyle(player.rank)} bg-[#111a11] p-4 flex items-center gap-4 transition-all duration-200 hover:scale-[1.01]`}
-              >
-                <div className="w-10 text-center">
-                  {player.rank === 1 && <span className="text-2xl">👑</span>}
-                  {player.rank === 2 && <span className="text-2xl">🥈</span>}
-                  {player.rank === 3 && <span className="text-2xl">🥉</span>}
-                  {player.rank > 3 && (
-                    <span className="mc-font text-[10px] text-[#9ab890]">#{player.rank}</span>
-                  )}
-                </div>
-
-                <div className="text-3xl w-10 text-center">{player.skin}</div>
-
-                <div className="flex-1 min-w-0">
-                  <div className="mc-font text-[10px] text-[#e8f0e0] truncate">{player.name}</div>
-                  <div className="text-[#9ab890] text-xs mt-0.5">Уровень {player.level}</div>
-                </div>
-
-                <div className="hidden sm:flex items-center gap-6 text-right">
-                  <div>
-                    <div className="mc-font text-[9px] text-[#ff4444]">{player.kills}</div>
-                    <div className="text-[#9ab890] text-xs">убийств</div>
+          {statusLoading ? (
+            <div className="flex items-center justify-center gap-3 py-12">
+              <span className="text-4xl animate-float">⛏️</span>
+              <span className="mc-font text-[10px] text-[#9ab890]">Загружаем список...</span>
+            </div>
+          ) : !serverOnline ? (
+            <div className="pixel-border border-[#8b0000] bg-[#1a0000] p-10 text-center">
+              <div className="text-5xl mb-4">💀</div>
+              <p className="mc-font text-[10px] text-[#ff4444] mb-2">СЕРВЕР ОФФЛАЙН</p>
+              <p className="text-[#9ab890] text-sm">Никого нет дома... Заходи первым!</p>
+            </div>
+          ) : onlinePlayers === 0 ? (
+            <div className="pixel-border border-[#2d5a1b] bg-[#111a11] p-10 text-center">
+              <div className="text-5xl mb-4">🌙</div>
+              <p className="mc-font text-[10px] text-[#f5c842] mb-2">СЕРВЕР ПУСТОЙ</p>
+              <p className="text-[#9ab890] text-sm">Никого нет онлайн. Заходи — будь первым!</p>
+            </div>
+          ) : playerList.length > 0 ? (
+            <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-3">
+              {playerList.map((name, i) => (
+                <div
+                  key={name}
+                  className="pixel-border border-[#2d5a1b] bg-[#111a11] p-4 flex items-center gap-3 hover:border-[#5a9e32] transition-all duration-200"
+                >
+                  <div className="w-10 h-10 bg-[#0d150d] pixel-border border-[#2d5a1b] flex items-center justify-center text-lg flex-shrink-0">
+                    🧑
                   </div>
-                  <div>
-                    <div className="mc-font text-[9px] text-[#5ee7f0]">{player.playtime}</div>
-                    <div className="text-[#9ab890] text-xs">наиграно</div>
+                  <div className="flex-1 min-w-0">
+                    <div className="mc-font text-[10px] text-[#e8f0e0] truncate">{name}</div>
+                    <div className="flex items-center gap-1 mt-1">
+                      <span className="status-dot w-2 h-2 inline-block" style={{width:8,height:8}}></span>
+                      <span className="text-[#5a9e32] text-xs">онлайн</span>
+                    </div>
                   </div>
                 </div>
+              ))}
+            </div>
+          ) : (
+            <div className="pixel-border border-[#2d5a1b] bg-[#111a11] p-10 text-center">
+              <div className="text-5xl mb-4">👥</div>
+              <p className="mc-font text-[10px] text-[#5a9e32] mb-2">{onlinePlayers} ИГРОКОВ ОНЛАЙН</p>
+              <p className="text-[#9ab890] text-sm">Сервер не передаёт список игроков — но они есть!</p>
+            </div>
+          )}
 
-                <div className="hidden md:block w-24">
-                  <div className="xp-bar">
-                    <div className="xp-bar-fill" style={{ width: `${(player.level / 99) * 100}%` }} />
-                  </div>
-                  <div className="mc-font text-[7px] text-[#9ab890] mt-1 text-right">LVL {player.level}</div>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <div className="mt-8 text-center">
-            <button className="mc-btn px-8 py-3">
-              📊 Смотреть полный рейтинг
-            </button>
+          <div className="mt-6 flex items-center justify-center gap-2">
+            <span className="status-dot inline-block"></span>
+            <span className="mc-font text-[9px] text-[#9ab890]">
+              {serverOnline ? `${onlinePlayers} из ${maxPlayers} слотов занято` : "сервер недоступен"}
+            </span>
           </div>
         </div>
       </section>
