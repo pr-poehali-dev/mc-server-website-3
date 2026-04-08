@@ -126,7 +126,7 @@ export default function Index() {
         <div className="max-w-6xl mx-auto px-4 flex items-center justify-between h-16">
           <div className="flex items-center gap-3">
             <span className="text-2xl animate-float inline-block">⛏️</span>
-            <span className="mc-font text-[#5a9e32] text-xs md:text-sm tracking-wide">CraftWorld</span>
+            <span className="mc-font text-[#5a9e32] text-xs md:text-sm tracking-wide">hedgehog</span>
           </div>
 
           <div className="hidden md:flex items-center gap-1">
@@ -490,7 +490,7 @@ export default function Index() {
             <div>
               <div className="flex items-center gap-2 mb-4">
                 <span className="text-3xl">⛏️</span>
-                <span className="mc-font text-[#5a9e32] text-sm">CraftWorld</span>
+                <span className="mc-font text-[#5a9e32] text-sm">hedgehog</span>
               </div>
               <p className="text-[#9ab890] text-sm leading-relaxed">
                 Лучший выживальный сервер для настоящих игроков. Строй, воюй и побеждай!
@@ -532,7 +532,7 @@ export default function Index() {
           </div>
 
           <div className="border-t-2 border-[#2d5a1b] pt-6 flex flex-col md:flex-row items-center justify-between gap-4">
-            <p className="text-[#9ab890] text-xs">© 2026 CraftWorld. Не является официальным проектом Mojang.</p>
+            <p className="text-[#9ab890] text-xs">© 2026 hedgehog. Не является официальным проектом Mojang.</p>
             <div className="flex items-center gap-2">
               <span className="status-dot"></span>
               <span className="mc-font text-[8px] text-[#5a9e32]">СЕРВЕР РАБОТАЕТ</span>
