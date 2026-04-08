@@ -66,13 +66,40 @@ const NEWS = [
   },
 ];
 
+const MC_STATUS_URL = "https://functions.poehali.dev/7aa79f5a-8b10-4326-af73-c0e7072da009";
+
 export default function Index() {
   const [activeSection, setActiveSection] = useState("home");
-  const [onlinePlayers] = useState(247);
-  const [maxPlayers] = useState(500);
-  const [tps] = useState(19.8);
-  const [serverOnline] = useState(true);
+  const [onlinePlayers, setOnlinePlayers] = useState(0);
+  const [maxPlayers, setMaxPlayers] = useState(20);
+  const [tps] = useState(20.0);
+  const [serverOnline, setServerOnline] = useState(false);
+  const [serverVersion, setServerVersion] = useState("");
+  const [serverMotd, setServerMotd] = useState("");
+  const [statusLoading, setStatusLoading] = useState(true);
   const [mobileMenu, setMobileMenu] = useState(false);
+
+  const fetchStatus = async () => {
+    try {
+      const res = await fetch(MC_STATUS_URL);
+      const data = await res.json();
+      setServerOnline(data.online);
+      setOnlinePlayers(data.players_online ?? 0);
+      setMaxPlayers(data.players_max ?? 20);
+      setServerVersion(data.version ?? "");
+      setServerMotd(data.motd ?? "");
+    } catch {
+      setServerOnline(false);
+    } finally {
+      setStatusLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchStatus();
+    const interval = setInterval(fetchStatus, 30000);
+    return () => clearInterval(interval);
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -132,8 +159,16 @@ export default function Index() {
           </div>
 
           <div className="hidden md:flex items-center gap-2">
-            <span className="status-dot"></span>
-            <span className="mc-font text-[8px] text-[#5a9e32]">{onlinePlayers} онлайн</span>
+            {statusLoading ? (
+              <span className="mc-font text-[8px] text-[#9ab890]">загрузка...</span>
+            ) : (
+              <>
+                <span className={`status-dot ${!serverOnline ? "bg-red-500 shadow-red-500" : ""}`} style={!serverOnline ? {background:"#ff4444", boxShadow:"0 0 8px #ff4444"} : {}}></span>
+                <span className={`mc-font text-[8px] ${serverOnline ? "text-[#5a9e32]" : "text-[#ff4444]"}`}>
+                  {serverOnline ? `${onlinePlayers} онлайн` : "оффлайн"}
+                </span>
+              </>
+            )}
           </div>
 
           <button className="md:hidden text-[#5a9e32]" onClick={() => setMobileMenu(!mobileMenu)}>
@@ -220,8 +255,8 @@ export default function Index() {
 
           <div className="mt-12 grid grid-cols-3 gap-4 max-w-md mx-auto">
             {[
-              { label: "Игроков онлайн", value: onlinePlayers, icon: "👥" },
-              { label: "TPS", value: tps, icon: "⚡" },
+              { label: "Игроков онлайн", value: statusLoading ? "..." : serverOnline ? onlinePlayers : "—", icon: "👥" },
+              { label: "Версия", value: statusLoading ? "..." : serverVersion || "—", icon: "⚡" },
               { label: "Дней работы", value: "842", icon: "📅" },
             ].map((stat) => (
               <div key={stat.label} className="pixel-border-green bg-[#0d1f0d]/80 p-3 text-center">
@@ -249,32 +284,44 @@ export default function Index() {
             <p className="text-[#9ab890]">Мониторинг в реальном времени</p>
           </div>
 
-          <div className="pixel-border-green bg-[#111a11] p-6 mb-8">
-            <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-              <div className="flex items-center gap-4">
-                <span className="text-5xl">{serverOnline ? "🟢" : "🔴"}</span>
-                <div>
-                  <div className="mc-font text-[#5a9e32] text-sm">
-                    {serverOnline ? "СЕРВЕР ОНЛАЙН" : "СЕРВЕР ОФФЛАЙН"}
+          <div className={`${serverOnline ? "pixel-border-green" : "pixel-border border-[#8b0000]"} bg-[#111a11] p-6 mb-8`}>
+            {statusLoading ? (
+              <div className="flex items-center justify-center gap-3 py-4">
+                <span className="text-3xl animate-float">⛏️</span>
+                <span className="mc-font text-[10px] text-[#9ab890]">Проверяем статус...</span>
+              </div>
+            ) : (
+              <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+                <div className="flex items-center gap-4">
+                  <span className="text-5xl">{serverOnline ? "🟢" : "🔴"}</span>
+                  <div>
+                    <div className={`mc-font text-sm ${serverOnline ? "text-[#5a9e32]" : "text-[#ff4444]"}`}>
+                      {serverOnline ? "СЕРВЕР ОНЛАЙН" : "СЕРВЕР ОФФЛАЙН"}
+                    </div>
+                    <div className="text-[#9ab890] text-sm mt-1">
+                      hedgehog8888.aternos.me:35185
+                      {serverVersion && <span className="text-[#5ee7f0]"> · {serverVersion}</span>}
+                    </div>
+                    {serverMotd && (
+                      <div className="text-[#f5c842] text-xs mt-1 italic">{serverMotd}</div>
+                    )}
                   </div>
-                  <div className="text-[#9ab890] text-sm mt-1">hedgehog8888.aternos.me:35185 · Java 1.21</div>
+                </div>
+
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                  {[
+                    { label: "Онлайн", value: serverOnline ? `${onlinePlayers}/${maxPlayers}` : "—", color: "#5a9e32" },
+                    { label: "Версия", value: serverVersion || "—", color: "#5ee7f0" },
+                    { label: "Статус", value: serverOnline ? "ONLINE" : "OFFLINE", color: serverOnline ? "#5a9e32" : "#ff4444" },
+                  ].map((s) => (
+                    <div key={s.label} className="text-center pixel-border border-[#2d5a1b] bg-[#0d150d] px-4 py-3">
+                      <div className="mc-font text-xs font-bold" style={{ color: s.color }}>{s.value}</div>
+                      <div className="text-[#9ab890] text-xs mt-1">{s.label}</div>
+                    </div>
+                  ))}
                 </div>
               </div>
-
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                {[
-                  { label: "Онлайн", value: `${onlinePlayers}/${maxPlayers}`, color: "#5a9e32" },
-                  { label: "TPS", value: tps.toString(), color: "#5ee7f0" },
-                  { label: "Пинг", value: "24ms", color: "#f5c842" },
-                  { label: "Аптайм", value: "99.9%", color: "#5a9e32" },
-                ].map((s) => (
-                  <div key={s.label} className="text-center pixel-border border-[#2d5a1b] bg-[#0d150d] px-4 py-3">
-                    <div className="mc-font text-sm font-bold" style={{ color: s.color }}>{s.value}</div>
-                    <div className="text-[#9ab890] text-xs mt-1">{s.label}</div>
-                  </div>
-                ))}
-              </div>
-            </div>
+            )}
           </div>
 
           <div className="pixel-border border-[#2d5a1b] bg-[#111a11] p-6 mb-6">
