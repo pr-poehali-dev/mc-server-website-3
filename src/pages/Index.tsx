@@ -337,32 +337,7 @@ export default function Index() {
             </div>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-4">
-            {[
-              { name: "Выживание", mode: "Survival", players: 124, max: 200, icon: "🌲" },
-              { name: "Анархия", mode: "Anarchy", players: 87, max: 150, icon: "💀" },
-              { name: "Мини-игры", mode: "Minigames", players: 36, max: 100, icon: "🎮" },
-            ].map((srv) => (
-              <div key={srv.name} className="pixel-border border-[#2d5a1b] bg-[#111a11] p-5">
-                <div className="flex items-center gap-3 mb-4">
-                  <span className="text-3xl">{srv.icon}</span>
-                  <div>
-                    <div className="mc-font text-[10px] text-[#e8f0e0]">{srv.name}</div>
-                    <div className="text-[#9ab890] text-xs">{srv.mode}</div>
-                  </div>
-                  <div className="ml-auto">
-                    <span className="status-dot inline-block"></span>
-                  </div>
-                </div>
-                <div className="xp-bar">
-                  <div className="xp-bar-fill" style={{ width: `${(srv.players / srv.max) * 100}%` }} />
-                </div>
-                <div className="mt-2 mc-font text-[8px] text-[#9ab890] text-right">
-                  {srv.players}/{srv.max}
-                </div>
-              </div>
-            ))}
-          </div>
+
         </div>
       </section>
 
