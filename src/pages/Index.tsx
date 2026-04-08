@@ -206,7 +206,7 @@ export default function Index() {
 
           <div className="inline-block pixel-border-green bg-[#0d1f0d] px-6 py-3 mb-8">
             <p className="mc-font text-[9px] text-[#9ab890] mb-1">АДРЕС СЕРВЕРА</p>
-            <p className="mc-font text-[#5a9e32] text-sm md:text-base tracking-wider">play.craftworld.ru</p>
+            <p className="mc-font text-[#5a9e32] text-sm md:text-base tracking-wider">hedgehog8888.aternos.me:35185</p>
           </div>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -257,7 +257,7 @@ export default function Index() {
                   <div className="mc-font text-[#5a9e32] text-sm">
                     {serverOnline ? "СЕРВЕР ОНЛАЙН" : "СЕРВЕР ОФФЛАЙН"}
                   </div>
-                  <div className="text-[#9ab890] text-sm mt-1">play.craftworld.ru · Java 1.21</div>
+                  <div className="text-[#9ab890] text-sm mt-1">hedgehog8888.aternos.me:35185 · Java 1.21</div>
                 </div>
               </div>
 
@@ -503,7 +503,7 @@ export default function Index() {
             <div>
               <h4 className="mc-font text-[10px] text-[#e8f0e0] mb-4">АДРЕС СЕРВЕРА</h4>
               <div className="pixel-border-green bg-[#0d1f0d] p-4 mb-4">
-                <p className="mc-font text-[#5a9e32] text-sm">play.craftworld.ru</p>
+                <p className="mc-font text-[#5a9e32] text-sm">hedgehog8888.aternos.me:35185</p>
                 <p className="text-[#9ab890] text-xs mt-1">Java 1.21 · Bedrock</p>
               </div>
               <div className="flex gap-3">
